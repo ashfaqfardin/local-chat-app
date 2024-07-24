@@ -22,6 +22,11 @@ const App: React.FC = () => {
 
     socket.on('message', (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
+      
+      // Play vibration when a new message arrives
+      if (navigator.vibrate) {
+        navigator.vibrate(200); // Vibrate for 200ms
+      }
     });
 
     return () => {
@@ -65,7 +70,7 @@ const App: React.FC = () => {
             className="bg-green-500 text-white p-2 flex items-center rounded"
             onClick={registerUser}
           >
-            Register <FontAwesomeIcon icon={faUser} className="ml-2" />
+            Register
           </button>
         </div>
       </div>
@@ -77,16 +82,24 @@ const App: React.FC = () => {
       return 'bg-blue-600';
     } else {
       const userIndex = users.findIndex(user => user.name === userName);
-      const colors = ['bg-green-600', 'bg-gray-700', 'bg-yellow-600', 'bg-red-600', 'bg-purple-600'];
+      const colors = ['bg-gray-700', 'bg-yellow-600', 'bg-red-600', 'bg-purple-600'];
       return colors[userIndex % colors.length];
     }
+  };
+
+  const getAvatar = (userName: string) => {
+    return (
+      <div className="w-8 h-8 flex items-center justify-center bg-gray-600 text-white rounded-full text-sm font-bold">
+        {userName.charAt(0)}
+      </div>
+    );
   };
 
   return (
     <div className="bg-gray-900 h-screen flex flex-col md:flex-row">
       <div className={`${sidebarOpen ? 'block' : 'hidden'} md:block bg-gray-800 text-white w-full md:w-1/4 lg:w-1/5 h-full p-4 space-y-4`}>
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl">Users</h1>
+          <h1 className="text-2xl">Active Users</h1>
           <button onClick={() => setSidebarOpen(false)} className="md:hidden">
             <FontAwesomeIcon icon={faTimes} />
           </button>
@@ -94,8 +107,8 @@ const App: React.FC = () => {
         <ul>
           {users.map((user) => (
             <li key={user.id} className="p-2 rounded-xl bg-gray-700 mb-2 flex items-center">
-              <FontAwesomeIcon icon={faUser} className="mr-2" />
-              {user.name}
+              {getAvatar(user.name)}
+              <span className="ml-2">{user.name}</span>
             </li>
           ))}
         </ul>
@@ -108,22 +121,25 @@ const App: React.FC = () => {
           </button>
           <div className="flex items-center">
             <FontAwesomeIcon icon={faComments} className="mr-2" />
-            ChatApp
+            ChatApp by Fardin
           </div>
         </header>
 
-        <div className="flex-1 p-4 overflow-y-auto bg-gray-800 mt-4 md:mt-0 rounded-t-xl">
+        <div className="flex-1 p-4 overflow-y-auto bg-gray-900 mt-4 md:mt-0 rounded-t-xl">
           <div className="space-y-4">
             {messages.map((msg, index) => (
-              <div key={index} className={`mb-2 p-3 rounded-xl ${getMessageColor(msg.user)} text-white`}>
-                <strong>{msg.user}:</strong> {msg.text}
+              <div key={index} className={`mb-2 p-3 rounded-xl ${getMessageColor(msg.user)} text-white flex items-start`}>
+                {getAvatar(msg.user)}
+                <div className="ml-2">
+                  <strong>{msg.user}:</strong> {msg.text}
+                </div>
               </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
         </div>
 
-        <footer className="p-4 bg-gray-800 flex items-center md:rounded-none sticky bottom-0">
+        <footer className="p-4 bg-gray-900 flex items-center md:rounded-none sticky bottom-0">
           <input
             className="flex-1 border p-2 mr-4 rounded-xl bg-gray-700 text-white"
             value={message}
