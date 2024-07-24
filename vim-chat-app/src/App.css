@@ -1,0 +1,28 @@
+body {
+  @apply bg-gray-900;
+}
+
+input,
+button {
+  @apply rounded;
+}
+
+.chat-bubble {
+  @apply mb-2 p-3 rounded-xl text-white;
+}
+
+.header {
+  @apply bg-green-600 p-4 text-white flex justify-between items-center md:rounded-none;
+}
+
+.footer {
+  @apply p-4 bg-gray-800 flex items-center md:rounded-none sticky bottom-0;
+}
+
+.sidebar {
+  @apply bg-gray-800 text-white w-full md:w-1/4 lg:w-1/5 h-full p-4 space-y-4;
+}
+
+.typing-indicator {
+  @apply p-2 text-gray-400;
+}
