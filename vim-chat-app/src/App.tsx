@@ -74,21 +74,31 @@ const App: React.FC = () => {
 
   const getMessageColor = (userName: string) => {
     if (userName === name) {
-      return 'bg-blue-600';
+        return 'bg-blue-600';
     } else {
-      const userIndex = users.findIndex(user => user.name === userName);
-      const colors = ['bg-gray-700', 'bg-yellow-600', 'bg-red-600', 'bg-purple-600'];
-      return colors[userIndex % colors.length];
+        const colors = ['bg-gray-700', 'bg-yellow-600', 'bg-red-600', 'bg-purple-600', 'bg-green-600', 'bg-teal-600'];
+        // Use a hash function to ensure a more distributed color assignment
+        const hash = Array.from(userName).reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
+        return colors[Math.abs(hash) % colors.length];
     }
-  };
+};
+
 
   const getAvatar = (userName: string) => {
+    // Generate a hash based on the userName to create a unique color
+    const hash = Array.from(userName).reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
+    const color = `hsl(${hash % 360}, 70%, 60%)`;
+  
     return (
-      <div className="w-8 h-8 flex items-center justify-center bg-gray-600 text-white rounded-full text-sm font-bold">
+      <div
+        className="w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold border-2 border-white"
+        style={{ backgroundColor: color }}
+      >
         {userName.charAt(0)}
       </div>
     );
   };
+  
 
   if (!registered) {
     return (
@@ -130,7 +140,7 @@ const App: React.FC = () => {
                 {getAvatar(user.name)}
                 <span className="ml-2">{user.name}</span>
               </div>
-              <span className={`w-3 h-3 rounded-full ${user.online ? 'bg-green-500' : 'bg-red-500'}`} />
+              <span className="w-3 h-3 rounded-full bg-green-500" />
             </li>
           ))}
         </ul>
