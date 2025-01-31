@@ -1,5 +1,3 @@
-Here's the updated documentation with your additional information:
-
 # **Local Chat Application**
 
 A real-time chat application with seamless local network communication, built using modern web technologies.
