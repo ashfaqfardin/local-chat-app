@@ -11,7 +11,7 @@ const io = new Server(server, {
       // Allow requests with no origin, like mobile apps or curl requests
       if (!origin) return callback(null, true);
       // Allow any local IPs and localhost
-      const allowedOrigins = ['http://localhost:3000', 'http://192.168.1.16:3000'];
+      const allowedOrigins = ['http://localhost:3000', 'http://192.168.1.8:3000'];
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
@@ -25,7 +25,7 @@ const io = new Server(server, {
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
-    if (['http://localhost:3000', 'http://192.168.1.16:3000'].indexOf(origin) !== -1) {
+    if (['http://localhost:3000', 'http://192.168.1.8:3000'].indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

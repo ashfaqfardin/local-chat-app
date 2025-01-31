@@ -1,5 +1,5 @@
 {
-  "name": "vim-chat-app",
+  "name": "local-chat-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
