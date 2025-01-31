@@ -28,10 +28,11 @@ Ensure you have the following installed on your system:
 
 1. **Open Terminal or Git Bash**
 2. **Run the following command:**
-   ```bash
-   git clone <repository-url>
-   cd local-chat-app
-   ```
+
+```bash
+git clone <repository-url>
+cd local-chat-app
+```
 
 ### **Install Backend Dependencies**
 
